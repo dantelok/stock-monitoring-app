@@ -1,0 +1,87 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1773989245411,
+  "projectRoot": "/Users/dantelok/Desktop/stock-monitoring-app",
+  "techStack": {
+    "languages": [
+      {
+        "name": "Python",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "requirements.txt"
+        ]
+      }
+    ],
+    "frameworks": [],
+    "packageManager": "pip",
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": null,
+    "testCommand": null,
+    "lintCommand": null,
+    "devCommand": null,
+    "scripts": {}
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [],
+    "gitBranches": {
+      "defaultBranch": "main",
+      "branchingStrategy": null
+    }
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "templates": {
+      "path": "templates",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1773989245394,
+      "keyFiles": [
+        "index.html"
+      ]
+    }
+  },
+  "hotPaths": [
+    {
+      "path": "templates/index.html",
+      "accessCount": 37,
+      "lastAccessed": 1773993762824,
+      "type": "file"
+    },
+    {
+      "path": "app.py",
+      "accessCount": 12,
+      "lastAccessed": 1773995017174,
+      "type": "file"
+    },
+    {
+      "path": "requirements.txt",
+      "accessCount": 4,
+      "lastAccessed": 1773993224940,
+      "type": "file"
+    },
+    {
+      "path": "",
+      "accessCount": 2,
+      "lastAccessed": 1773992947477,
+      "type": "directory"
+    },
+    {
+      "path": "README.md",
+      "accessCount": 1,
+      "lastAccessed": 1773989272085,
+      "type": "file"
+    }
+  ],
+  "userDirectives": []
+}

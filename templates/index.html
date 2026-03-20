@@ -19,6 +19,7 @@
             --accent-red: #ff4757;
             --accent-orange: #ff9f43;
             --accent-purple: #a855f7;
+            --accent-yellow: #f59e0b;
             --text-primary: #f1f5f9;
             --text-secondary: #94a3b8;
             --text-muted: #64748b;
@@ -42,7 +43,6 @@
             overflow-x: hidden;
         }
 
-        /* Animated background */
         body::before {
             content: '';
             position: fixed;
@@ -50,7 +50,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: 
+            background:
                 radial-gradient(ellipse at 20% 20%, rgba(0, 212, 255, 0.08) 0%, transparent 50%),
                 radial-gradient(ellipse at 80% 80%, rgba(168, 85, 247, 0.08) 0%, transparent 50%),
                 radial-gradient(ellipse at 50% 50%, rgba(0, 255, 136, 0.03) 0%, transparent 70%);
@@ -385,6 +385,42 @@
             50% { opacity: 0.5; }
         }
 
+        /* Tab Navigation */
+        .tab-selector {
+            display: flex;
+            gap: 0.5rem;
+            padding: 0.35rem;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            width: fit-content;
+        }
+
+        .tab-btn {
+            padding: 0.6rem 1.5rem;
+            background: transparent;
+            border: none;
+            border-radius: 8px;
+            color: var(--text-secondary);
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-primary);
+            background: var(--bg-hover);
+        }
+
+        .tab-btn.active {
+            background: var(--gradient-2);
+            color: var(--bg-primary);
+            font-weight: 700;
+            box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+        }
+
         /* Main Content */
         .main-content {
             display: grid;
@@ -570,6 +606,70 @@
             height: 380px;
         }
 
+        /* Indicator Controls */
+        .indicator-controls {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            padding: 0.75rem 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+        }
+
+        .indicator-group {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .indicator-group-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-right: 0.25rem;
+        }
+
+        .indicator-toggle {
+            padding: 0.35rem 0.75rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .indicator-toggle:hover {
+            border-color: var(--indicator-color, var(--accent-cyan));
+            color: var(--text-primary);
+        }
+
+        .indicator-toggle.active {
+            background: color-mix(in srgb, var(--indicator-color, var(--accent-cyan)) 15%, transparent);
+            border-color: var(--indicator-color, var(--accent-cyan));
+            color: var(--indicator-color, var(--accent-cyan));
+        }
+
+        .indicator-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--indicator-color, var(--accent-cyan));
+            opacity: 0.5;
+        }
+
+        .indicator-toggle.active .indicator-dot {
+            opacity: 1;
+        }
+
         /* Sidebar Stats */
         .sidebar {
             display: flex;
@@ -600,78 +700,20 @@
 
         .stat-value {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--text-primary);
+            font-size: 1.5rem;
+            font-weight: 700;
         }
 
-        .stat-value.green { color: var(--accent-green); }
-        .stat-value.red { color: var(--accent-red); }
         .stat-value.cyan { color: var(--accent-cyan); }
         .stat-value.purple { color: var(--accent-purple); }
+        .stat-value.green { color: var(--accent-green); }
+        .stat-value.red { color: var(--accent-red); }
 
-        /* Empty State */
-        .empty-state {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 500px;
-            text-align: center;
-            padding: 3rem;
-        }
-
-        .empty-state-icon {
-            font-size: 5rem;
-            margin-bottom: 1.5rem;
-            opacity: 0.5;
-        }
-
-        .empty-state h2 {
-            font-size: 1.5rem;
-            margin-bottom: 0.75rem;
-            color: var(--text-primary);
-        }
-
-        .empty-state p {
-            color: var(--text-muted);
-            max-width: 400px;
-            line-height: 1.6;
-        }
-
-        .popular-stocks {
-            display: flex;
-            gap: 0.75rem;
-            margin-top: 2rem;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .popular-stock-btn {
-            padding: 0.6rem 1.25rem;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            color: var(--text-secondary);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.875rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .popular-stock-btn:hover {
-            border-color: var(--accent-cyan);
-            color: var(--accent-cyan);
-            background: rgba(0, 212, 255, 0.1);
-        }
-
-        /* Loading State */
+        /* Loading states */
         .loading {
             display: none;
-            align-items: center;
             justify-content: center;
-            min-height: 400px;
+            padding: 4rem;
         }
 
         .loading.active {
@@ -679,30 +721,29 @@
         }
 
         .spinner {
-            width: 50px;
-            height: 50px;
+            width: 48px;
+            height: 48px;
             border: 3px solid var(--border-color);
             border-top-color: var(--accent-cyan);
             border-radius: 50%;
-            animation: spin 1s linear infinite;
+            animation: spin 0.8s linear infinite;
         }
 
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
 
-        /* Chart Loading Overlay */
         .chart-loading {
+            display: none;
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(26, 35, 50, 0.9);
-            display: none;
-            align-items: center;
-            justify-content: center;
+            background: rgba(10, 14, 23, 0.7);
             border-radius: 20px;
+            justify-content: center;
+            align-items: center;
             z-index: 10;
         }
 
@@ -714,88 +755,73 @@
             position: relative;
         }
 
-        /* Error State */
+        /* Empty state */
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .empty-state h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .empty-state p {
+            color: var(--text-muted);
+            max-width: 400px;
+            margin-bottom: 2rem;
+        }
+
+        .popular-stocks {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .popular-stock-btn {
+            padding: 0.6rem 1.25rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--accent-cyan);
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .popular-stock-btn:hover {
+            border-color: var(--accent-cyan);
+            background: rgba(0, 212, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Error message */
         .error-message {
             display: none;
+            padding: 1rem 1.5rem;
             background: rgba(255, 71, 87, 0.1);
             border: 1px solid var(--accent-red);
             border-radius: 12px;
-            padding: 1rem 1.5rem;
             color: var(--accent-red);
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.875rem;
         }
 
         .error-message.active {
             display: block;
-            animation: shake 0.5s ease;
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            75% { transform: translateX(10px); }
-        }
-
-        /* Indicator Controls */
-        .indicator-controls {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            padding: 1rem;
-            background: var(--bg-secondary);
-            border-radius: 12px;
-            margin-bottom: 1rem;
-        }
-
-        .indicator-group {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .indicator-group-label {
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-right: 0.25rem;
-        }
-
-        .indicator-toggle {
-            display: flex;
-            align-items: center;
-            gap: 0.35rem;
-            padding: 0.4rem 0.75rem;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            color: var(--text-muted);
-            font-size: 0.75rem;
-            font-family: 'JetBrains Mono', monospace;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .indicator-toggle:hover {
-            border-color: var(--text-secondary);
-            color: var(--text-secondary);
-        }
-
-        .indicator-toggle.active {
-            border-color: var(--indicator-color, var(--accent-cyan));
-            color: var(--indicator-color, var(--accent-cyan));
-            background: rgba(0, 212, 255, 0.1);
-        }
-
-        .indicator-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--indicator-color, var(--text-muted));
-        }
-
-        .indicator-toggle.active .indicator-dot {
-            box-shadow: 0 0 6px var(--indicator-color, var(--accent-cyan));
         }
 
         /* Sub-charts container */
@@ -836,8 +862,12 @@
             color: var(--accent-cyan);
         }
 
-        #volume-chart, #rs-chart {
+        #volume-chart, #rs-chart, #rsi-chart, #atr-chart {
             height: 120px;
+        }
+
+        #macd-chart {
+            height: 150px;
         }
 
         .indicator-divider {
@@ -847,31 +877,254 @@
             margin: 0 0.5rem;
         }
 
+        /* Screener Styles */
+        .screener-content {
+            display: none;
+        }
+
+        .screener-controls {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .screener-controls-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.25rem;
+        }
+
+        .screener-controls-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .sector-selector {
+            display: flex;
+            gap: 0.5rem;
+            padding: 0.35rem;
+            background: var(--bg-secondary);
+            border-radius: 10px;
+        }
+
+        .sector-btn {
+            padding: 0.5rem 1.25rem;
+            background: transparent;
+            border: none;
+            border-radius: 7px;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .sector-btn.active {
+            background: var(--gradient-2);
+            color: var(--bg-primary);
+            font-weight: 700;
+        }
+
+        .filter-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.25rem;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .filter-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .filter-input {
+            padding: 0.5rem 0.75rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            width: 100%;
+            transition: border-color 0.2s;
+        }
+
+        .filter-input:focus {
+            outline: none;
+            border-color: var(--accent-cyan);
+        }
+
+        .screener-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .scan-btn {
+            padding: 0.65rem 1.5rem;
+            background: var(--gradient-2);
+            border: none;
+            border-radius: 10px;
+            color: var(--bg-primary);
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .scan-btn:hover {
+            box-shadow: 0 4px 20px rgba(0, 212, 255, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .scan-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .filter-btn {
+            padding: 0.65rem 1.5rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-weight: 500;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--accent-cyan);
+        }
+
+        /* Screener Table */
+        .screener-table-wrapper {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .screener-status {
+            padding: 1rem 1.5rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .screener-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .screener-table th {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--border-color);
+            cursor: pointer;
+            user-select: none;
+            transition: color 0.2s;
+        }
+
+        .screener-table th:hover {
+            color: var(--accent-cyan);
+        }
+
+        .screener-table th.sorted-asc::after { content: ' ▲'; color: var(--accent-cyan); }
+        .screener-table th.sorted-desc::after { content: ' ▼'; color: var(--accent-cyan); }
+
+        .screener-table td {
+            padding: 0.75rem 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            border-bottom: 1px solid rgba(45, 58, 79, 0.5);
+        }
+
+        .screener-table tr {
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .screener-table tbody tr:hover {
+            background: var(--bg-hover);
+        }
+
+        .screener-table .ticker-cell {
+            color: var(--accent-cyan);
+            font-weight: 700;
+        }
+
+        .screener-table .name-cell {
+            font-family: 'Outfit', sans-serif;
+            color: var(--text-primary);
+            max-width: 180px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .score-badge {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        .score-high { background: rgba(0, 255, 136, 0.15); color: var(--accent-green); }
+        .score-medium { background: rgba(245, 158, 11, 0.15); color: var(--accent-yellow); }
+        .score-low { background: rgba(255, 71, 87, 0.15); color: var(--accent-red); }
+
+        .screener-empty {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-muted);
+        }
+
+        .screener-loading {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+        }
+
+        .screener-loading.active {
+            display: block;
+        }
+
         /* Responsive */
         @media (max-width: 1200px) {
-            .left-sidebar {
-                width: 220px;
-            }
-            
-            .container {
-                margin-left: 220px;
-            }
+            .left-sidebar { width: 220px; }
+            .container { margin-left: 220px; }
         }
 
         @media (max-width: 1024px) {
-            .main-content {
-                grid-template-columns: 1fr;
-            }
-
-            .sidebar {
-                flex-direction: row;
-                flex-wrap: wrap;
-            }
-
-            .stat-card {
-                flex: 1;
-                min-width: 150px;
-            }
+            .main-content { grid-template-columns: 1fr; }
+            .sidebar { flex-direction: row; flex-wrap: wrap; }
+            .stat-card { flex: 1; min-width: 150px; }
         }
 
         @media (max-width: 768px) {
@@ -883,11 +1136,7 @@
                 border-bottom: 1px solid var(--border-color);
                 transform: none !important;
             }
-            
-            .left-sidebar.collapsed {
-                display: none;
-            }
-            
+            .left-sidebar.collapsed { display: none; }
             .sidebar-toggle {
                 position: fixed;
                 top: auto;
@@ -898,83 +1147,37 @@
                 border-radius: 50%;
                 box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
             }
-            
-            .sidebar-toggle.collapsed {
-                left: 1rem;
-            }
-            
-            .sidebar-toggle .toggle-icon {
-                transform: rotate(-90deg);
-            }
-            
-            .sidebar-toggle.collapsed .toggle-icon {
-                transform: rotate(90deg);
-            }
-            
-            .container {
-                margin-left: 0 !important;
-            }
-            
-            .app-layout {
-                flex-direction: column;
-            }
-            
-            .history-list {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 0.5rem;
-            }
-            
-            .history-item {
-                margin-bottom: 0;
-                flex: 0 0 auto;
-            }
-            
-            .history-name {
-                display: none;
-            }
-
-            .header {
-                flex-direction: column;
-                gap: 1.5rem;
-                align-items: stretch;
-            }
-
-            .search-section {
-                max-width: none;
-                margin: 0;
-            }
-
-            .time-display {
-                text-align: center;
-            }
-
-            .period-selector {
-                flex-wrap: wrap;
-            }
-
-            .period-btn {
-                flex: 0 0 calc(25% - 0.5rem);
-            }
+            .sidebar-toggle.collapsed { left: 1rem; }
+            .sidebar-toggle .toggle-icon { transform: rotate(-90deg); }
+            .sidebar-toggle.collapsed .toggle-icon { transform: rotate(90deg); }
+            .container { margin-left: 0 !important; }
+            .app-layout { flex-direction: column; }
+            .history-list { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+            .history-item { margin-bottom: 0; flex: 0 0 auto; }
+            .history-name { display: none; }
+            .header { flex-direction: column; gap: 1.5rem; align-items: stretch; }
+            .search-section { max-width: none; margin: 0; }
+            .time-display { text-align: center; }
+            .period-selector { flex-wrap: wrap; }
+            .period-btn { flex: 0 0 calc(25% - 0.5rem); }
+            .filter-row { flex-direction: column; }
         }
     </style>
 </head>
 <body>
     <div class="app-layout">
-        <!-- Sidebar Toggle Button -->
         <button class="sidebar-toggle" id="sidebar-toggle" onclick="toggleSidebar()" title="Toggle Sidebar">
-            <span class="toggle-icon">◀</span>
+            <span class="toggle-icon">&#9664;</span>
         </button>
 
-        <!-- Left Sidebar - Search History -->
         <aside class="left-sidebar" id="left-sidebar">
             <div class="sidebar-header">
-                <span class="sidebar-title">📜 History</span>
+                <span class="sidebar-title">History</span>
                 <button class="clear-history-btn" onclick="clearHistory()">Clear All</button>
             </div>
             <ul class="history-list" id="history-list">
                 <li class="history-empty" id="history-empty">
-                    <div class="history-empty-icon">🔍</div>
+                    <div class="history-empty-icon">&#128269;</div>
                     <div>No search history yet</div>
                 </li>
             </ul>
@@ -983,7 +1186,7 @@
         <div class="container">
             <header class="header">
             <div class="logo">
-                <div class="logo-icon">📈</div>
+                <div class="logo-icon">&#128200;</div>
                 <div>
                     <h1>StockPulse</h1>
                     <span>Real-time Market Monitor</span>
@@ -992,11 +1195,11 @@
 
             <div class="search-section">
                 <div class="search-container">
-                    <span class="search-icon">🔍</span>
-                    <input 
-                        type="text" 
-                        class="search-input" 
-                        id="stock-search" 
+                    <span class="search-icon">&#128269;</span>
+                    <input
+                        type="text"
+                        class="search-input"
+                        id="stock-search"
                         placeholder="Enter stock symbol (e.g., NVDA, AAPL, TSLA)"
                         autocomplete="off"
                     >
@@ -1013,10 +1216,18 @@
             </div>
         </header>
 
+        <!-- Tab Navigation -->
+        <div class="tab-selector" id="tab-selector">
+            <button class="tab-btn active" data-tab="chart" onclick="switchTab('chart')">Chart</button>
+            <button class="tab-btn" data-tab="screener" onclick="switchTab('screener')">Screener</button>
+        </div>
+
         <div class="error-message" id="error-message"></div>
 
+        <!-- Chart Tab Content -->
+        <div id="chart-tab-content">
         <div id="empty-state" class="empty-state">
-            <div class="empty-state-icon">📊</div>
+            <div class="empty-state-icon">&#128202;</div>
             <h2>Start Monitoring Stocks</h2>
             <p>Enter a stock symbol in the search bar above to view real-time price data and interactive charts.</p>
             <div class="popular-stocks">
@@ -1043,7 +1254,7 @@
                     <div class="stock-price-section">
                         <div class="current-price" id="current-price">$0.00</div>
                         <div class="price-change positive" id="price-change">
-                            <span class="price-change-arrow">▲</span>
+                            <span class="price-change-arrow">&#9650;</span>
                             <span id="change-value">+$0.00</span>
                             <span id="change-percent">(+0.00%)</span>
                         </div>
@@ -1065,32 +1276,28 @@
             <div class="indicator-controls">
                 <div class="indicator-group">
                     <span class="indicator-group-label">SMA:</span>
-                    <button class="indicator-toggle" data-indicator="sma20" onclick="toggleIndicator('sma20')" style="--indicator-color: #ffcc00;">
-                        <span class="indicator-dot"></span>20
-                    </button>
-                    <button class="indicator-toggle" data-indicator="sma50" onclick="toggleIndicator('sma50')" style="--indicator-color: #ff6b6b;">
-                        <span class="indicator-dot"></span>50
-                    </button>
-                    <button class="indicator-toggle" data-indicator="sma200" onclick="toggleIndicator('sma200')" style="--indicator-color: #a855f7;">
-                        <span class="indicator-dot"></span>200
-                    </button>
+                    <button class="indicator-toggle" data-indicator="sma20" onclick="toggleIndicator('sma20')" style="--indicator-color: #ffcc00;"><span class="indicator-dot"></span>20</button>
+                    <button class="indicator-toggle" data-indicator="sma50" onclick="toggleIndicator('sma50')" style="--indicator-color: #ff6b6b;"><span class="indicator-dot"></span>50</button>
+                    <button class="indicator-toggle" data-indicator="sma200" onclick="toggleIndicator('sma200')" style="--indicator-color: #a855f7;"><span class="indicator-dot"></span>200</button>
                 </div>
                 <div class="indicator-divider"></div>
                 <div class="indicator-group">
                     <span class="indicator-group-label">Bands:</span>
-                    <button class="indicator-toggle" data-indicator="bollinger" onclick="toggleIndicator('bollinger')" style="--indicator-color: #00d4ff;">
-                        <span class="indicator-dot"></span>Bollinger
-                    </button>
+                    <button class="indicator-toggle" data-indicator="bollinger" onclick="toggleIndicator('bollinger')" style="--indicator-color: #00d4ff;"><span class="indicator-dot"></span>Bollinger</button>
+                </div>
+                <div class="indicator-divider"></div>
+                <div class="indicator-group">
+                    <span class="indicator-group-label">Overlays:</span>
+                    <button class="indicator-toggle" data-indicator="vwap" onclick="toggleIndicator('vwap')" style="--indicator-color: #ff9f43;"><span class="indicator-dot"></span>VWAP</button>
                 </div>
                 <div class="indicator-divider"></div>
                 <div class="indicator-group">
                     <span class="indicator-group-label">Panels:</span>
-                    <button class="indicator-toggle active" data-indicator="volume" onclick="toggleIndicator('volume')" style="--indicator-color: #00ff88;">
-                        <span class="indicator-dot"></span>Volume
-                    </button>
-                    <button class="indicator-toggle active" data-indicator="rs" onclick="toggleIndicator('rs')" style="--indicator-color: #ff9f43;">
-                        <span class="indicator-dot"></span>RS
-                    </button>
+                    <button class="indicator-toggle active" data-indicator="volume" onclick="toggleIndicator('volume')" style="--indicator-color: #00ff88;"><span class="indicator-dot"></span>Vol</button>
+                    <button class="indicator-toggle active" data-indicator="rs" onclick="toggleIndicator('rs')" style="--indicator-color: #ff9f43;"><span class="indicator-dot"></span>RS</button>
+                    <button class="indicator-toggle active" data-indicator="rsi" onclick="toggleIndicator('rsi')" style="--indicator-color: #f59e0b;"><span class="indicator-dot"></span>RSI</button>
+                    <button class="indicator-toggle active" data-indicator="macd" onclick="toggleIndicator('macd')" style="--indicator-color: #00d4ff;"><span class="indicator-dot"></span>MACD</button>
+                    <button class="indicator-toggle" data-indicator="atr" onclick="toggleIndicator('atr')" style="--indicator-color: #a855f7;"><span class="indicator-dot"></span>ATR</button>
                 </div>
             </div>
 
@@ -1107,22 +1314,43 @@
                         </div>
                     </div>
                     <div id="stock-chart"></div>
-                    
-                    <!-- Sub-charts for Volume and RS -->
+
+                    <!-- Sub-charts -->
                     <div class="sub-charts">
                         <div class="sub-chart-container" id="volume-container">
                             <div class="sub-chart-header">
-                                <span class="sub-chart-title">📊 Volume</span>
+                                <span class="sub-chart-title">Volume</span>
                                 <span class="sub-chart-value" id="volume-value">--</span>
                             </div>
                             <div id="volume-chart"></div>
                         </div>
                         <div class="sub-chart-container" id="rs-container">
                             <div class="sub-chart-header">
-                                <span class="sub-chart-title">📈 Relative Strength vs S&P 500</span>
+                                <span class="sub-chart-title">Relative Strength vs S&P 500</span>
                                 <span class="sub-chart-value" id="rs-value">--</span>
                             </div>
                             <div id="rs-chart"></div>
+                        </div>
+                        <div class="sub-chart-container" id="rsi-container">
+                            <div class="sub-chart-header">
+                                <span class="sub-chart-title">RSI (14)</span>
+                                <span class="sub-chart-value" id="rsi-value">--</span>
+                            </div>
+                            <div id="rsi-chart"></div>
+                        </div>
+                        <div class="sub-chart-container" id="macd-container">
+                            <div class="sub-chart-header">
+                                <span class="sub-chart-title">MACD (12/26/9)</span>
+                                <span class="sub-chart-value" id="macd-value">--</span>
+                            </div>
+                            <div id="macd-chart"></div>
+                        </div>
+                        <div class="sub-chart-container hidden" id="atr-container">
+                            <div class="sub-chart-header">
+                                <span class="sub-chart-title">ATR (14)</span>
+                                <span class="sub-chart-value" id="atr-value">--</span>
+                            </div>
+                            <div id="atr-chart"></div>
                         </div>
                     </div>
                 </div>
@@ -1148,138 +1376,196 @@
             </div>
         </div>
         </div>
+
+        <!-- Screener Tab Content -->
+        <div id="screener-tab-content" class="screener-content">
+            <div class="screener-controls">
+                <div class="screener-controls-header">
+                    <span class="screener-controls-title">Mean-Reversion Stock Screener</span>
+                    <div class="sector-selector">
+                        <button class="sector-btn active" data-sector="tech" onclick="selectSector('tech')">Tech</button>
+                        <button class="sector-btn" data-sector="energy" onclick="selectSector('energy')">Energy</button>
+                    </div>
+                </div>
+
+                <div class="filter-row">
+                    <div class="filter-group">
+                        <label class="filter-label">EPS Min</label>
+                        <input type="number" class="filter-input" id="filter-eps" value="0" step="0.5">
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">P/E Max</label>
+                        <input type="number" class="filter-input" id="filter-pe" value="30" step="1">
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">Rev Growth Min %</label>
+                        <input type="number" class="filter-input" id="filter-rev" value="5" step="1">
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">RSI Max</label>
+                        <input type="number" class="filter-input" id="filter-rsi" value="40" step="5">
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">BB %B Max</label>
+                        <input type="number" class="filter-input" id="filter-bb" value="0.20" step="0.05" min="0" max="1">
+                    </div>
+                </div>
+
+                <div class="screener-actions">
+                    <button class="scan-btn" id="scan-btn" onclick="runScreenerScan()">Scan Sector</button>
+                    <button class="filter-btn" onclick="applyScreenerFilters()">Apply Filters</button>
+                </div>
+            </div>
+
+            <div class="screener-table-wrapper">
+                <div class="screener-status" id="screener-status" style="display:none">
+                    <span id="screener-status-text">--</span>
+                    <span id="screener-cache-status"></span>
+                </div>
+                <div class="screener-loading" id="screener-loading">
+                    <div class="spinner" style="margin: 0 auto 1rem;"></div>
+                    <span>Scanning stocks...</span>
+                </div>
+                <div id="screener-results">
+                    <div class="screener-empty">Select a sector and click "Scan Sector" to find mean-reversion candidates.</div>
+                </div>
+            </div>
+        </div>
+
+        </div>
     </div>
 
     <script>
         let currentSymbol = '';
         let currentPeriod = '1y';
         let currentChartType = 'area';
+        let currentTab = 'chart';
+        let currentSector = 'tech';
         let chart = null;
         let volumeChart = null;
         let rsChart = null;
+        let rsiChart = null;
+        let macdChart = null;
+        let atrChart = null;
         let stockData = null;
-        
-        // Indicator visibility state
+        let screenerData = [];
+        let screenerSortCol = 'score';
+        let screenerSortAsc = false;
+
         const indicators = {
             sma20: false,
             sma50: false,
             sma200: false,
             bollinger: false,
+            vwap: false,
             volume: true,
-            rs: true
+            rs: true,
+            rsi: true,
+            macd: true,
+            atr: false
         };
-        
-        // Indicator colors
+
         const indicatorColors = {
             sma20: '#ffcc00',
             sma50: '#ff6b6b',
             sma200: '#a855f7',
             bbUpper: '#00d4ff',
             bbMiddle: '#00d4ff',
-            bbLower: '#00d4ff'
+            bbLower: '#00d4ff',
+            vwap: '#ff9f43',
+            rsi: '#f59e0b',
+            macd: '#00d4ff',
+            atr: '#a855f7'
         };
-        
+
+        // Sub-chart indicators (toggle via CSS, not re-render)
+        const subChartIndicators = new Set(['volume', 'rs', 'rsi', 'macd', 'atr']);
+
         // Search history management
         const HISTORY_KEY = 'stockpulse_history';
         const MAX_HISTORY = 20;
-        
+
         function getSearchHistory() {
-            try {
-                return JSON.parse(localStorage.getItem(HISTORY_KEY)) || [];
-            } catch {
-                return [];
-            }
+            try { return JSON.parse(localStorage.getItem(HISTORY_KEY)) || []; }
+            catch { return []; }
         }
-        
+
         function saveSearchHistory(history) {
             localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
         }
-        
+
         function addToHistory(symbol, name) {
             let history = getSearchHistory();
-            // Remove if already exists (to move to top)
             history = history.filter(item => item.symbol !== symbol);
-            // Add to beginning
             history.unshift({ symbol, name, timestamp: Date.now() });
-            // Limit size
             history = history.slice(0, MAX_HISTORY);
             saveSearchHistory(history);
             renderHistory();
         }
-        
+
         function removeFromHistory(symbol) {
             let history = getSearchHistory();
             history = history.filter(item => item.symbol !== symbol);
             saveSearchHistory(history);
             renderHistory();
         }
-        
+
         function clearHistory() {
             localStorage.removeItem(HISTORY_KEY);
             renderHistory();
         }
-        
+
         function renderHistory() {
             const historyList = document.getElementById('history-list');
             const history = getSearchHistory();
-            
+
             if (history.length === 0) {
-                historyList.innerHTML = `
-                    <li class="history-empty" id="history-empty">
-                        <div class="history-empty-icon">🔍</div>
-                        <div>No search history yet</div>
-                    </li>
-                `;
+                historyList.innerHTML = '<li class="history-empty"><div class="history-empty-icon">&#128269;</div><div>No search history yet</div></li>';
                 return;
             }
-            
+
             historyList.innerHTML = history.map(item => `
-                <li class="history-item ${item.symbol === currentSymbol ? 'active' : ''}" 
+                <li class="history-item ${item.symbol === currentSymbol ? 'active' : ''}"
                     onclick="loadStock('${item.symbol}')">
                     <span class="history-symbol">${item.symbol}</span>
                     <span class="history-name">${item.name || item.symbol}</span>
-                    <button class="history-remove" onclick="event.stopPropagation(); removeFromHistory('${item.symbol}')" title="Remove">×</button>
+                    <button class="history-remove" onclick="event.stopPropagation(); removeFromHistory('${item.symbol}')" title="Remove">&times;</button>
                 </li>
             `).join('');
         }
-        
-        // Sidebar toggle management
+
+        // Sidebar toggle
         const SIDEBAR_KEY = 'stockpulse_sidebar';
-        
-        function getSidebarState() {
-            return localStorage.getItem(SIDEBAR_KEY) !== 'collapsed';
-        }
-        
-        function setSidebarState(isOpen) {
-            localStorage.setItem(SIDEBAR_KEY, isOpen ? 'open' : 'collapsed');
-        }
-        
+
+        function getSidebarState() { return localStorage.getItem(SIDEBAR_KEY) !== 'collapsed'; }
+        function setSidebarState(isOpen) { localStorage.setItem(SIDEBAR_KEY, isOpen ? 'open' : 'collapsed'); }
+
         function toggleSidebar() {
             const sidebar = document.getElementById('left-sidebar');
             const toggle = document.getElementById('sidebar-toggle');
             const container = document.querySelector('.container');
-            
             const isCollapsed = sidebar.classList.toggle('collapsed');
             toggle.classList.toggle('collapsed', isCollapsed);
             container.classList.toggle('expanded', isCollapsed);
-            
             setSidebarState(!isCollapsed);
         }
-        
+
         function initSidebar() {
-            const isOpen = getSidebarState();
-            if (!isOpen) {
-                const sidebar = document.getElementById('left-sidebar');
-                const toggle = document.getElementById('sidebar-toggle');
-                const container = document.querySelector('.container');
-                
-                sidebar.classList.add('collapsed');
-                toggle.classList.add('collapsed');
-                container.classList.add('expanded');
+            if (!getSidebarState()) {
+                document.getElementById('left-sidebar').classList.add('collapsed');
+                document.getElementById('sidebar-toggle').classList.add('collapsed');
+                document.querySelector('.container').classList.add('expanded');
             }
         }
-        
-        // Initialize on page load
+
+        // Tab navigation
+        function switchTab(tab) {
+            currentTab = tab;
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
+            document.getElementById('chart-tab-content').style.display = tab === 'chart' ? 'block' : 'none';
+            document.getElementById('screener-tab-content').style.display = tab === 'screener' ? 'block' : 'none';
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             renderHistory();
             initSidebar();
@@ -1287,132 +1573,84 @@
 
         // Update time
         function updateTime() {
-            const now = new Date();
-            document.getElementById('current-time').textContent = now.toLocaleTimeString('en-US', {
-                hour12: false,
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit'
+            document.getElementById('current-time').textContent = new Date().toLocaleTimeString('en-US', {
+                hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit'
             });
         }
         setInterval(updateTime, 1000);
         updateTime();
 
-        // Search on Enter key
         document.getElementById('stock-search').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                searchStock();
-            }
+            if (e.key === 'Enter') searchStock();
         });
 
-        // Period button listeners
         document.querySelectorAll('.period-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
                 currentPeriod = this.dataset.period;
-                if (currentSymbol) {
-                    fetchStockData(currentSymbol, currentPeriod, true); // true = period change only
-                }
+                if (currentSymbol) fetchStockData(currentSymbol, currentPeriod, true);
             });
         });
 
         function searchStock() {
             const symbol = document.getElementById('stock-search').value.trim().toUpperCase();
-            if (symbol) {
-                loadStock(symbol);
-            }
+            if (symbol) loadStock(symbol);
         }
 
         function loadStock(symbol) {
             document.getElementById('stock-search').value = symbol;
             currentSymbol = symbol;
-            fetchStockData(symbol, currentPeriod, false); // false = new stock search
+            if (currentTab !== 'chart') switchTab('chart');
+            fetchStockData(symbol, currentPeriod, false);
         }
 
         async function fetchStockData(symbol, period, isPeriodChange = false) {
             hideError();
-            
-            if (isPeriodChange) {
-                // Only show chart loading overlay
-                showChartLoading();
-            } else {
-                // Show full page loading for new stock
-                showLoading();
-            }
+            if (isPeriodChange) { showChartLoading(); } else { showLoading(); }
 
             try {
                 const response = await fetch(`/api/stock/${symbol}?period=${period}`);
                 const data = await response.json();
-
-                if (!response.ok) {
-                    throw new Error(data.error || 'Failed to fetch stock data');
-                }
+                if (!response.ok) throw new Error(data.error || 'Failed to fetch stock data');
 
                 stockData = data;
-                
+
                 if (isPeriodChange) {
-                    // Only update chart and price change
                     updatePriceChange(data);
                     renderChart(data);
                     hideChartLoading();
                 } else {
-                    // Update everything for new stock
                     displayStockData(data);
-                    // Add to search history
                     addToHistory(data.symbol, data.name);
                     hideLoading();
                     showContent();
                 }
-
             } catch (error) {
                 hideLoading();
                 hideChartLoading();
                 showError(error.message);
-                if (!isPeriodChange) {
-                    showEmpty();
-                }
+                if (!isPeriodChange) showEmpty();
             }
         }
-        
+
         function updatePriceChange(data) {
             const changeElement = document.getElementById('price-change');
-            const arrow = data.priceChange >= 0 ? '▲' : '▼';
+            const arrow = data.priceChange >= 0 ? '&#9650;' : '&#9660;';
             const sign = data.priceChange >= 0 ? '+' : '';
-            
             changeElement.className = `price-change ${data.priceChange >= 0 ? 'positive' : 'negative'}`;
-            changeElement.innerHTML = `
-                <span class="price-change-arrow">${arrow}</span>
-                <span>${sign}$${Math.abs(data.priceChange).toFixed(2)}</span>
-                <span>(${sign}${data.priceChangePct.toFixed(2)}%)</span>
-            `;
+            changeElement.innerHTML = `<span class="price-change-arrow">${arrow}</span><span>${sign}$${Math.abs(data.priceChange).toFixed(2)}</span><span>(${sign}${data.priceChangePct.toFixed(2)}%)</span>`;
         }
 
         function displayStockData(data) {
-            // Update stock info
             document.getElementById('stock-symbol').textContent = data.symbol;
             document.getElementById('stock-name').textContent = data.name;
             document.getElementById('current-price').textContent = `$${data.currentPrice.toLocaleString()}`;
-
-            // Update price change
-            const changeElement = document.getElementById('price-change');
-            const arrow = data.priceChange >= 0 ? '▲' : '▼';
-            const sign = data.priceChange >= 0 ? '+' : '';
-            
-            changeElement.className = `price-change ${data.priceChange >= 0 ? 'positive' : 'negative'}`;
-            changeElement.innerHTML = `
-                <span class="price-change-arrow">${arrow}</span>
-                <span>${sign}$${Math.abs(data.priceChange).toFixed(2)}</span>
-                <span>(${sign}${data.priceChangePct.toFixed(2)}%)</span>
-            `;
-
-            // Update stats
+            updatePriceChange(data);
             document.getElementById('market-cap').textContent = formatNumber(data.marketCap);
             document.getElementById('volume').textContent = formatNumber(data.volume);
             document.getElementById('high-52w').textContent = typeof data.high52Week === 'number' ? `$${data.high52Week.toFixed(2)}` : '--';
             document.getElementById('low-52w').textContent = typeof data.low52Week === 'number' ? `$${data.low52Week.toFixed(2)}` : '--';
-
-            // Render chart
             renderChart(data);
         }
 
@@ -1420,389 +1658,280 @@
             const chartData = currentChartType === 'area' ? data.lineData : data.candlestickData;
             const isPositive = data.priceChange >= 0;
 
-            // Build series array with main price data
             const series = [{
                 name: data.symbol,
                 type: currentChartType === 'area' ? 'area' : 'candlestick',
                 data: chartData
             }];
-            
-            // Build colors array
             const colors = [isPositive ? '#00ff88' : '#ff4757'];
-            
-            // Build stroke widths
             const strokeWidths = [currentChartType === 'area' ? 2.5 : 1];
-            
-            // Add SMA indicators if enabled
+
             if (indicators.sma20 && data.sma20) {
-                series.push({
-                    name: 'SMA 20',
-                    type: 'line',
-                    data: data.sma20.filter(d => d.y !== null)
-                });
-                colors.push(indicatorColors.sma20);
-                strokeWidths.push(1.5);
+                series.push({ name: 'SMA 20', type: 'line', data: data.sma20.filter(d => d.y !== null) });
+                colors.push(indicatorColors.sma20); strokeWidths.push(1.5);
             }
-            
             if (indicators.sma50 && data.sma50) {
-                series.push({
-                    name: 'SMA 50',
-                    type: 'line',
-                    data: data.sma50.filter(d => d.y !== null)
-                });
-                colors.push(indicatorColors.sma50);
-                strokeWidths.push(1.5);
+                series.push({ name: 'SMA 50', type: 'line', data: data.sma50.filter(d => d.y !== null) });
+                colors.push(indicatorColors.sma50); strokeWidths.push(1.5);
             }
-            
             if (indicators.sma200 && data.sma200) {
-                series.push({
-                    name: 'SMA 200',
-                    type: 'line',
-                    data: data.sma200.filter(d => d.y !== null)
-                });
-                colors.push(indicatorColors.sma200);
-                strokeWidths.push(1.5);
+                series.push({ name: 'SMA 200', type: 'line', data: data.sma200.filter(d => d.y !== null) });
+                colors.push(indicatorColors.sma200); strokeWidths.push(1.5);
             }
-            
-            // Add Bollinger Bands if enabled
             if (indicators.bollinger && data.bbUpper && data.bbMiddle && data.bbLower) {
-                series.push({
-                    name: 'BB Upper',
-                    type: 'line',
-                    data: data.bbUpper.filter(d => d.y !== null)
-                });
-                colors.push(indicatorColors.bbUpper);
-                strokeWidths.push(1);
-                
-                series.push({
-                    name: 'BB Middle',
-                    type: 'line',
-                    data: data.bbMiddle.filter(d => d.y !== null)
-                });
-                colors.push(indicatorColors.bbMiddle);
-                strokeWidths.push(1);
-                
-                series.push({
-                    name: 'BB Lower',
-                    type: 'line',
-                    data: data.bbLower.filter(d => d.y !== null)
-                });
-                colors.push(indicatorColors.bbLower);
-                strokeWidths.push(1);
+                series.push({ name: 'BB Upper', type: 'line', data: data.bbUpper.filter(d => d.y !== null) });
+                colors.push(indicatorColors.bbUpper); strokeWidths.push(1);
+                series.push({ name: 'BB Middle', type: 'line', data: data.bbMiddle.filter(d => d.y !== null) });
+                colors.push(indicatorColors.bbMiddle); strokeWidths.push(1);
+                series.push({ name: 'BB Lower', type: 'line', data: data.bbLower.filter(d => d.y !== null) });
+                colors.push(indicatorColors.bbLower); strokeWidths.push(1);
+            }
+            // VWAP overlay (intraday only)
+            if (indicators.vwap && data.vwap) {
+                series.push({ name: 'VWAP', type: 'line', data: data.vwap.filter(d => d.y !== null) });
+                colors.push(indicatorColors.vwap); strokeWidths.push(2);
             }
 
             const options = {
                 series: series,
                 chart: {
-                    type: 'line',
-                    height: 380,
-                    background: 'transparent',
-                    toolbar: {
-                        show: true,
-                        tools: {
-                            download: false,
-                            selection: true,
-                            zoom: true,
-                            zoomin: true,
-                            zoomout: true,
-                            pan: true,
-                            reset: true
-                        }
-                    },
-                    zoom: {
-                        enabled: true
-                    },
-                    animations: {
-                        enabled: true,
-                        speed: 500
-                    }
+                    type: 'line', height: 380, background: 'transparent',
+                    toolbar: { show: true, tools: { download: false, selection: true, zoom: true, zoomin: true, zoomout: true, pan: true, reset: true } },
+                    zoom: { enabled: true },
+                    animations: { enabled: true, speed: 500 }
                 },
                 colors: colors,
                 fill: {
                     type: series.map((s, i) => i === 0 && currentChartType === 'area' ? 'gradient' : 'solid'),
-                    gradient: {
-                        shadeIntensity: 1,
-                        opacityFrom: 0.4,
-                        opacityTo: 0.05,
-                        stops: [0, 90, 100]
-                    },
+                    gradient: { shadeIntensity: 1, opacityFrom: 0.4, opacityTo: 0.05, stops: [0, 90, 100] },
                     opacity: series.map((s, i) => i === 0 && currentChartType === 'area' ? 0.4 : 1)
                 },
                 stroke: {
                     curve: 'smooth',
                     width: strokeWidths,
-                    dashArray: series.map((s, i) => {
+                    dashArray: series.map(s => {
                         if (s.name === 'BB Upper' || s.name === 'BB Lower') return 4;
+                        if (s.name === 'VWAP') return 5;
                         return 0;
                     })
                 },
-                dataLabels: {
-                    enabled: false
-                },
+                dataLabels: { enabled: false },
                 xaxis: {
                     type: 'datetime',
-                    labels: {
-                        style: {
-                            colors: '#64748b',
-                            fontFamily: 'JetBrains Mono'
-                        },
-                        datetimeFormatter: {
-                            year: 'yyyy',
-                            month: "MMM 'yy",
-                            day: 'dd MMM',
-                            hour: 'HH:mm'
-                        }
-                    },
-                    axisBorder: {
-                        show: false
-                    },
-                    axisTicks: {
-                        show: false
-                    }
+                    labels: { style: { colors: '#64748b', fontFamily: 'JetBrains Mono' }, datetimeFormatter: { year: 'yyyy', month: "MMM 'yy", day: 'dd MMM', hour: 'HH:mm' } },
+                    axisBorder: { show: false }, axisTicks: { show: false }
                 },
                 yaxis: {
-                    labels: {
-                        style: {
-                            colors: '#64748b',
-                            fontFamily: 'JetBrains Mono'
-                        },
-                        formatter: function(value) {
-                            if (value === undefined || value === null) return '';
-                            return '$' + value.toFixed(2);
-                        }
-                    }
+                    labels: { style: { colors: '#64748b', fontFamily: 'JetBrains Mono' }, formatter: v => v != null ? '$' + v.toFixed(2) : '' }
                 },
-                grid: {
-                    borderColor: '#2d3a4f',
-                    strokeDashArray: 3
-                },
+                grid: { borderColor: '#2d3a4f', strokeDashArray: 3 },
                 tooltip: {
-                    theme: 'dark',
-                    style: {
-                        fontFamily: 'JetBrains Mono'
-                    },
-                    x: {
-                        format: 'dd MMM yyyy HH:mm'
-                    },
-                    y: {
-                        formatter: function(value) {
-                            if (value === undefined || value === null) return '';
-                            if (Array.isArray(value)) {
-                                return `O: $${value[0]} H: $${value[1]} L: $${value[2]} C: $${value[3]}`;
-                            }
-                            return '$' + value.toFixed(2);
-                        }
-                    }
+                    theme: 'dark', style: { fontFamily: 'JetBrains Mono' },
+                    x: { format: 'dd MMM yyyy HH:mm' },
+                    y: { formatter: v => { if (v == null) return ''; if (Array.isArray(v)) return `O: $${v[0]} H: $${v[1]} L: $${v[2]} C: $${v[3]}`; return '$' + v.toFixed(2); } }
                 },
-                legend: {
-                    show: series.length > 1,
-                    position: 'top',
-                    horizontalAlign: 'left',
-                    labels: {
-                        colors: '#94a3b8'
-                    }
-                },
-                plotOptions: {
-                    candlestick: {
-                        colors: {
-                            upward: '#00ff88',
-                            downward: '#ff4757'
-                        },
-                        wick: {
-                            useFillColor: true
-                        }
-                    }
-                }
+                legend: { show: series.length > 1, position: 'top', horizontalAlign: 'left', labels: { colors: '#94a3b8' } },
+                plotOptions: { candlestick: { colors: { upward: '#00ff88', downward: '#ff4757' }, wick: { useFillColor: true } } }
             };
 
-            if (chart) {
-                chart.destroy();
-            }
-
+            if (chart) chart.destroy();
             chart = new ApexCharts(document.getElementById('stock-chart'), options);
             chart.render();
-            
+
             // Render sub-charts
             renderVolumeChart(data);
             renderRSChart(data);
+            renderRSIChart(data);
+            renderMACDChart(data);
+            renderATRChart(data);
         }
-        
+
         function renderVolumeChart(data) {
             const container = document.getElementById('volume-container');
-            if (!indicators.volume) {
-                container.classList.add('hidden');
-                return;
-            }
+            if (!indicators.volume) { container.classList.add('hidden'); return; }
             container.classList.remove('hidden');
-            
-            // Update current volume value
+
             if (data.volumeData && data.volumeData.length > 0) {
-                const lastVolume = data.volumeData[data.volumeData.length - 1].y;
-                document.getElementById('volume-value').textContent = formatNumber(lastVolume);
+                document.getElementById('volume-value').textContent = formatNumber(data.volumeData[data.volumeData.length - 1].y);
             }
-            
+
             const options = {
-                series: [{
-                    name: 'Volume',
-                    data: data.volumeData || []
-                }],
-                chart: {
-                    type: 'bar',
-                    height: 120,
-                    background: 'transparent',
-                    toolbar: { show: false },
-                    sparkline: { enabled: false }
-                },
-                plotOptions: {
-                    bar: {
-                        columnWidth: '80%',
-                        distributed: true
-                    }
-                },
-                dataLabels: { enabled: false },
-                legend: { show: false },
+                series: [{ name: 'Volume', data: data.volumeData || [] }],
+                chart: { type: 'bar', height: 120, background: 'transparent', toolbar: { show: false } },
+                plotOptions: { bar: { columnWidth: '80%', distributed: true } },
+                dataLabels: { enabled: false }, legend: { show: false },
                 colors: data.volumeData ? data.volumeData.map(d => d.fillColor) : ['#00ff88'],
-                xaxis: {
-                    type: 'datetime',
-                    labels: { show: false },
-                    axisBorder: { show: false },
-                    axisTicks: { show: false }
-                },
-                yaxis: {
-                    labels: {
-                        style: { colors: '#64748b', fontFamily: 'JetBrains Mono', fontSize: '10px' },
-                        formatter: (val) => formatNumber(val)
-                    }
-                },
-                grid: {
-                    borderColor: '#2d3a4f',
-                    strokeDashArray: 3,
-                    xaxis: { lines: { show: false } }
-                },
-                tooltip: {
-                    theme: 'dark',
-                    y: { formatter: (val) => formatNumber(val) }
-                }
+                xaxis: { type: 'datetime', labels: { show: false }, axisBorder: { show: false }, axisTicks: { show: false } },
+                yaxis: { labels: { style: { colors: '#64748b', fontFamily: 'JetBrains Mono', fontSize: '10px' }, formatter: v => formatNumber(v) } },
+                grid: { borderColor: '#2d3a4f', strokeDashArray: 3, xaxis: { lines: { show: false } } },
+                tooltip: { theme: 'dark', y: { formatter: v => formatNumber(v) } }
             };
-            
-            if (volumeChart) {
-                volumeChart.destroy();
-            }
-            
+            if (volumeChart) volumeChart.destroy();
             volumeChart = new ApexCharts(document.getElementById('volume-chart'), options);
             volumeChart.render();
         }
-        
+
         function renderRSChart(data) {
             const container = document.getElementById('rs-container');
-            if (!indicators.rs) {
-                container.classList.add('hidden');
-                return;
-            }
+            if (!indicators.rs) { container.classList.add('hidden'); return; }
             container.classList.remove('hidden');
-            
-            // Update current RS value
+
             if (data.relativeStrength && data.relativeStrength.length > 0) {
                 const lastRS = data.relativeStrength[data.relativeStrength.length - 1].y;
                 const rsText = lastRS ? lastRS.toFixed(2) : '--';
-                const rsStatus = lastRS > 100 ? '▲ Outperforming' : lastRS < 100 ? '▼ Underperforming' : 'Neutral';
-                document.getElementById('rs-value').textContent = `${rsText} (${rsStatus})`;
+                const rsStatus = lastRS > 100 ? '&#9650; Outperforming' : lastRS < 100 ? '&#9660; Underperforming' : 'Neutral';
+                document.getElementById('rs-value').innerHTML = `${rsText} (${rsStatus})`;
                 document.getElementById('rs-value').style.color = lastRS > 100 ? '#00ff88' : lastRS < 100 ? '#ff4757' : '#ff9f43';
             }
-            
+
             const options = {
-                series: [{
-                    name: 'Relative Strength',
-                    data: (data.relativeStrength || []).filter(d => d.y !== null)
-                }],
-                chart: {
-                    type: 'line',
-                    height: 120,
-                    background: 'transparent',
-                    toolbar: { show: false }
-                },
+                series: [{ name: 'Relative Strength', data: (data.relativeStrength || []).filter(d => d.y !== null) }],
+                chart: { type: 'line', height: 120, background: 'transparent', toolbar: { show: false } },
                 colors: ['#ff9f43'],
-                stroke: {
-                    curve: 'smooth',
-                    width: 2
-                },
+                stroke: { curve: 'smooth', width: 2 },
                 dataLabels: { enabled: false },
-                xaxis: {
-                    type: 'datetime',
-                    labels: { show: false },
-                    axisBorder: { show: false },
-                    axisTicks: { show: false }
-                },
-                yaxis: {
-                    labels: {
-                        style: { colors: '#64748b', fontFamily: 'JetBrains Mono', fontSize: '10px' },
-                        formatter: (val) => val ? val.toFixed(0) : ''
-                    }
-                },
-                grid: {
-                    borderColor: '#2d3a4f',
-                    strokeDashArray: 3
-                },
-                annotations: {
-                    yaxis: [{
-                        y: 100,
-                        borderColor: '#64748b',
-                        borderWidth: 1,
-                        strokeDashArray: 5,
-                        label: {
-                            text: 'S&P 500 Baseline',
-                            style: {
-                                color: '#64748b',
-                                background: 'transparent',
-                                fontSize: '10px'
-                            }
-                        }
-                    }]
-                },
-                tooltip: {
-                    theme: 'dark',
-                    y: { 
-                        formatter: (val) => {
-                            if (!val) return '';
-                            const diff = val - 100;
-                            const sign = diff >= 0 ? '+' : '';
-                            return `${val.toFixed(2)} (${sign}${diff.toFixed(2)}% vs S&P)`;
-                        }
-                    }
-                }
+                xaxis: { type: 'datetime', labels: { show: false }, axisBorder: { show: false }, axisTicks: { show: false } },
+                yaxis: { labels: { style: { colors: '#64748b', fontFamily: 'JetBrains Mono', fontSize: '10px' }, formatter: v => v ? v.toFixed(0) : '' } },
+                grid: { borderColor: '#2d3a4f', strokeDashArray: 3 },
+                annotations: { yaxis: [{ y: 100, borderColor: '#64748b', borderWidth: 1, strokeDashArray: 5, label: { text: 'S&P 500 Baseline', style: { color: '#64748b', background: 'transparent', fontSize: '10px' } } }] },
+                tooltip: { theme: 'dark', y: { formatter: v => { if (!v) return ''; const diff = v - 100; return `${v.toFixed(2)} (${diff >= 0 ? '+' : ''}${diff.toFixed(2)}% vs S&P)`; } } }
             };
-            
-            if (rsChart) {
-                rsChart.destroy();
-            }
-            
+            if (rsChart) rsChart.destroy();
             rsChart = new ApexCharts(document.getElementById('rs-chart'), options);
             rsChart.render();
         }
-        
+
+        function renderRSIChart(data) {
+            const container = document.getElementById('rsi-container');
+            if (!indicators.rsi) { container.classList.add('hidden'); return; }
+            container.classList.remove('hidden');
+
+            if (data.rsi && data.rsi.length > 0) {
+                const lastRSI = data.rsi[data.rsi.length - 1].y;
+                if (lastRSI != null) {
+                    document.getElementById('rsi-value').textContent = lastRSI.toFixed(2);
+                    document.getElementById('rsi-value').style.color = lastRSI < 30 ? '#00ff88' : lastRSI > 70 ? '#ff4757' : '#f59e0b';
+                }
+            }
+
+            const options = {
+                series: [{ name: 'RSI', data: (data.rsi || []).filter(d => d.y !== null) }],
+                chart: { type: 'line', height: 120, background: 'transparent', toolbar: { show: false } },
+                colors: ['#f59e0b'],
+                stroke: { curve: 'smooth', width: 2 },
+                dataLabels: { enabled: false },
+                xaxis: { type: 'datetime', labels: { show: false }, axisBorder: { show: false }, axisTicks: { show: false } },
+                yaxis: { min: 0, max: 100, tickAmount: 4, labels: { style: { colors: '#64748b', fontFamily: 'JetBrains Mono', fontSize: '10px' }, formatter: v => v.toFixed(0) } },
+                grid: { borderColor: '#2d3a4f', strokeDashArray: 3 },
+                annotations: {
+                    yaxis: [
+                        { y: 30, borderColor: '#00ff88', borderWidth: 1, strokeDashArray: 4, label: { text: 'Oversold (30)', style: { color: '#00ff88', background: 'transparent', fontSize: '9px' }, position: 'front' } },
+                        { y: 70, borderColor: '#ff4757', borderWidth: 1, strokeDashArray: 4, label: { text: 'Overbought (70)', style: { color: '#ff4757', background: 'transparent', fontSize: '9px' }, position: 'front' } }
+                    ]
+                },
+                tooltip: { theme: 'dark', y: { formatter: v => v != null ? v.toFixed(2) : '' } }
+            };
+            if (rsiChart) rsiChart.destroy();
+            rsiChart = new ApexCharts(document.getElementById('rsi-chart'), options);
+            rsiChart.render();
+        }
+
+        function renderMACDChart(data) {
+            const container = document.getElementById('macd-container');
+            if (!indicators.macd) { container.classList.add('hidden'); return; }
+            container.classList.remove('hidden');
+
+            if (data.macdLine && data.macdLine.length > 0) {
+                const lastMACD = data.macdLine[data.macdLine.length - 1].y;
+                if (lastMACD != null) {
+                    document.getElementById('macd-value').textContent = lastMACD.toFixed(4);
+                    document.getElementById('macd-value').style.color = lastMACD >= 0 ? '#00ff88' : '#ff4757';
+                }
+            }
+
+            const histData = (data.macdHistogram || []).filter(d => d.y !== null);
+
+            const options = {
+                series: [
+                    { name: 'MACD Histogram', type: 'bar', data: histData },
+                    { name: 'MACD', type: 'line', data: (data.macdLine || []).filter(d => d.y !== null) },
+                    { name: 'Signal', type: 'line', data: (data.macdSignal || []).filter(d => d.y !== null) }
+                ],
+                chart: { type: 'line', height: 150, background: 'transparent', toolbar: { show: false } },
+                colors: [histData.length > 0 ? histData[histData.length-1].fillColor : '#00ff88', '#00d4ff', '#ff9f43'],
+                plotOptions: { bar: { columnWidth: '60%', distributed: true, colors: { ranges: [] } } },
+                stroke: { width: [0, 2, 2], curve: 'smooth' },
+                dataLabels: { enabled: false },
+                legend: { show: false },
+                xaxis: { type: 'datetime', labels: { show: false }, axisBorder: { show: false }, axisTicks: { show: false } },
+                yaxis: { labels: { style: { colors: '#64748b', fontFamily: 'JetBrains Mono', fontSize: '10px' }, formatter: v => v != null ? v.toFixed(2) : '' } },
+                grid: { borderColor: '#2d3a4f', strokeDashArray: 3 },
+                tooltip: { theme: 'dark', y: { formatter: v => v != null ? v.toFixed(4) : '' } }
+            };
+            if (macdChart) macdChart.destroy();
+            macdChart = new ApexCharts(document.getElementById('macd-chart'), options);
+            macdChart.render();
+        }
+
+        function renderATRChart(data) {
+            const container = document.getElementById('atr-container');
+            if (!indicators.atr) { container.classList.add('hidden'); return; }
+            container.classList.remove('hidden');
+
+            if (data.atr && data.atr.length > 0) {
+                const lastATR = data.atr[data.atr.length - 1].y;
+                if (lastATR != null) {
+                    document.getElementById('atr-value').textContent = '$' + lastATR.toFixed(2);
+                }
+            }
+
+            const options = {
+                series: [{ name: 'ATR', data: (data.atr || []).filter(d => d.y !== null) }],
+                chart: { type: 'line', height: 120, background: 'transparent', toolbar: { show: false } },
+                colors: ['#a855f7'],
+                stroke: { curve: 'smooth', width: 2 },
+                dataLabels: { enabled: false },
+                xaxis: { type: 'datetime', labels: { show: false }, axisBorder: { show: false }, axisTicks: { show: false } },
+                yaxis: { labels: { style: { colors: '#64748b', fontFamily: 'JetBrains Mono', fontSize: '10px' }, formatter: v => v != null ? '$' + v.toFixed(2) : '' } },
+                grid: { borderColor: '#2d3a4f', strokeDashArray: 3 },
+                tooltip: { theme: 'dark', y: { formatter: v => v != null ? '$' + v.toFixed(2) : '' } }
+            };
+            if (atrChart) atrChart.destroy();
+            atrChart = new ApexCharts(document.getElementById('atr-chart'), options);
+            atrChart.render();
+        }
+
         function toggleIndicator(indicator) {
             indicators[indicator] = !indicators[indicator];
-            
-            // Update button state
             const btn = document.querySelector(`[data-indicator="${indicator}"]`);
-            if (btn) {
-                btn.classList.toggle('active', indicators[indicator]);
-            }
-            
-            // Re-render charts
-            if (stockData) {
+            if (btn) btn.classList.toggle('active', indicators[indicator]);
+
+            if (!stockData) return;
+
+            // Sub-chart indicators: just toggle CSS visibility
+            if (subChartIndicators.has(indicator)) {
+                const containerMap = { volume: 'volume-container', rs: 'rs-container', rsi: 'rsi-container', macd: 'macd-container', atr: 'atr-container' };
+                const container = document.getElementById(containerMap[indicator]);
+                if (container) {
+                    if (indicators[indicator]) {
+                        container.classList.remove('hidden');
+                        // Render if not yet rendered
+                        const renderMap = { volume: renderVolumeChart, rs: renderRSChart, rsi: renderRSIChart, macd: renderMACDChart, atr: renderATRChart };
+                        renderMap[indicator](stockData);
+                    } else {
+                        container.classList.add('hidden');
+                    }
+                }
+            } else {
+                // Main chart overlays (SMA, Bollinger, VWAP): re-render main chart
                 renderChart(stockData);
             }
         }
 
         function setChartType(type) {
             currentChartType = type;
-            document.querySelectorAll('.chart-type-btn').forEach(btn => {
-                btn.classList.toggle('active', btn.dataset.type === type);
-            });
-            if (stockData) {
-                renderChart(stockData);
-            }
+            document.querySelectorAll('.chart-type-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.type === type));
+            if (stockData) renderChart(stockData);
         }
 
         function formatNumber(num) {
@@ -1814,42 +1943,154 @@
             return num.toLocaleString();
         }
 
-        function showLoading() {
-            document.getElementById('loading').classList.add('active');
-            document.getElementById('empty-state').style.display = 'none';
-            document.getElementById('stock-content').style.display = 'none';
-        }
-
-        function hideLoading() {
-            document.getElementById('loading').classList.remove('active');
-        }
-        
-        function showChartLoading() {
-            document.getElementById('chart-loading').classList.add('active');
-        }
-        
-        function hideChartLoading() {
-            document.getElementById('chart-loading').classList.remove('active');
-        }
-
-        function showContent() {
-            document.getElementById('stock-content').style.display = 'block';
-            document.getElementById('empty-state').style.display = 'none';
-        }
-
-        function showEmpty() {
-            document.getElementById('empty-state').style.display = 'flex';
-            document.getElementById('stock-content').style.display = 'none';
-        }
+        function showLoading() { document.getElementById('loading').classList.add('active'); document.getElementById('empty-state').style.display = 'none'; document.getElementById('stock-content').style.display = 'none'; }
+        function hideLoading() { document.getElementById('loading').classList.remove('active'); }
+        function showChartLoading() { document.getElementById('chart-loading').classList.add('active'); }
+        function hideChartLoading() { document.getElementById('chart-loading').classList.remove('active'); }
+        function showContent() { document.getElementById('stock-content').style.display = 'block'; document.getElementById('empty-state').style.display = 'none'; }
+        function showEmpty() { document.getElementById('empty-state').style.display = 'flex'; document.getElementById('stock-content').style.display = 'none'; }
 
         function showError(message) {
             const errorEl = document.getElementById('error-message');
-            errorEl.textContent = '⚠️ ' + message;
+            errorEl.textContent = message;
             errorEl.classList.add('active');
         }
+        function hideError() { document.getElementById('error-message').classList.remove('active'); }
 
-        function hideError() {
-            document.getElementById('error-message').classList.remove('active');
+        // === SCREENER ===
+        function selectSector(sector) {
+            currentSector = sector;
+            document.querySelectorAll('.sector-btn').forEach(b => b.classList.toggle('active', b.dataset.sector === sector));
+        }
+
+        async function runScreenerScan() {
+            const scanBtn = document.getElementById('scan-btn');
+            const loadingEl = document.getElementById('screener-loading');
+            const resultsEl = document.getElementById('screener-results');
+            const statusEl = document.getElementById('screener-status');
+
+            scanBtn.disabled = true;
+            scanBtn.textContent = 'Scanning...';
+            loadingEl.classList.add('active');
+            resultsEl.innerHTML = '';
+            statusEl.style.display = 'none';
+
+            try {
+                const response = await fetch(`/api/screener/scan?sector=${currentSector}`);
+                const data = await response.json();
+                if (!response.ok) throw new Error(data.error || 'Scan failed');
+
+                // Now apply filters
+                await applyScreenerFilters();
+            } catch (error) {
+                resultsEl.innerHTML = `<div class="screener-empty" style="color: var(--accent-red);">Scan failed: ${error.message}</div>`;
+            } finally {
+                scanBtn.disabled = false;
+                scanBtn.textContent = 'Scan Sector';
+                loadingEl.classList.remove('active');
+            }
+        }
+
+        async function applyScreenerFilters() {
+            const epsMin = document.getElementById('filter-eps').value;
+            const peMax = document.getElementById('filter-pe').value;
+            const revMin = document.getElementById('filter-rev').value;
+            const rsiMax = document.getElementById('filter-rsi').value;
+            const bbMax = document.getElementById('filter-bb').value;
+
+            const params = new URLSearchParams({
+                sector: currentSector,
+                eps_min: epsMin,
+                pe_max: peMax,
+                rev_growth_min: revMin,
+                rsi_max: rsiMax,
+                bb_pctb_max: bbMax
+            });
+
+            try {
+                const response = await fetch(`/api/screener/results?${params}`);
+                const data = await response.json();
+                if (!response.ok) throw new Error(data.error || 'Filter failed');
+
+                screenerData = data.results;
+
+                const statusEl = document.getElementById('screener-status');
+                statusEl.style.display = 'flex';
+                document.getElementById('screener-status-text').textContent = `${data.total_passed} of ${data.total_scanned} stocks passed filters`;
+
+                renderScreenerTable(screenerData);
+            } catch (error) {
+                document.getElementById('screener-results').innerHTML = `<div class="screener-empty" style="color: var(--accent-red);">${error.message}</div>`;
+            }
+        }
+
+        function renderScreenerTable(results) {
+            const el = document.getElementById('screener-results');
+
+            if (results.length === 0) {
+                el.innerHTML = '<div class="screener-empty">No stocks match the current filters. Try relaxing the thresholds.</div>';
+                return;
+            }
+
+            let html = '<table class="screener-table"><thead><tr>';
+            const columns = [
+                { key: 'rank', label: '#' },
+                { key: 'symbol', label: 'Ticker' },
+                { key: 'name', label: 'Name' },
+                { key: 'price', label: 'Price' },
+                { key: 'rsi', label: 'RSI' },
+                { key: 'pctb', label: 'BB %B' },
+                { key: 'eps', label: 'EPS' },
+                { key: 'pe', label: 'P/E' },
+                { key: 'revGrowth', label: 'Rev Growth' },
+                { key: 'score', label: 'Score' }
+            ];
+
+            columns.forEach(col => {
+                let cls = '';
+                if (screenerSortCol === col.key) cls = screenerSortAsc ? 'sorted-asc' : 'sorted-desc';
+                html += `<th class="${cls}" onclick="sortScreenerResults('${col.key}')">${col.label}</th>`;
+            });
+            html += '</tr></thead><tbody>';
+
+            results.forEach((r, i) => {
+                const scoreClass = r.score >= 60 ? 'score-high' : r.score >= 30 ? 'score-medium' : 'score-low';
+                html += `<tr onclick="loadStock('${r.symbol}')">`;
+                html += `<td>${i + 1}</td>`;
+                html += `<td class="ticker-cell">${r.symbol}</td>`;
+                html += `<td class="name-cell">${r.name}</td>`;
+                html += `<td>$${r.price.toFixed(2)}</td>`;
+                html += `<td>${r.rsi != null ? r.rsi.toFixed(1) : '--'}</td>`;
+                html += `<td>${r.pctb != null ? r.pctb.toFixed(3) : '--'}</td>`;
+                html += `<td>${r.eps != null ? r.eps.toFixed(2) : '--'}</td>`;
+                html += `<td>${r.pe != null ? r.pe.toFixed(1) : '--'}</td>`;
+                html += `<td>${r.revGrowth != null ? r.revGrowth.toFixed(1) + '%' : '--'}</td>`;
+                html += `<td><span class="score-badge ${scoreClass}">${r.score.toFixed(1)}</span></td>`;
+                html += '</tr>';
+            });
+
+            html += '</tbody></table>';
+            el.innerHTML = html;
+        }
+
+        function sortScreenerResults(col) {
+            if (screenerSortCol === col) {
+                screenerSortAsc = !screenerSortAsc;
+            } else {
+                screenerSortCol = col;
+                screenerSortAsc = col === 'symbol' || col === 'name'; // alpha default asc, numbers default desc
+            }
+
+            screenerData.sort((a, b) => {
+                let va = col === 'rank' ? 0 : a[col];
+                let vb = col === 'rank' ? 0 : b[col];
+                if (va == null) va = screenerSortAsc ? Infinity : -Infinity;
+                if (vb == null) vb = screenerSortAsc ? Infinity : -Infinity;
+                if (typeof va === 'string') return screenerSortAsc ? va.localeCompare(vb) : vb.localeCompare(va);
+                return screenerSortAsc ? va - vb : vb - va;
+            });
+
+            renderScreenerTable(screenerData);
         }
     </script>
 </body>
