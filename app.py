@@ -517,6 +517,182 @@ def screener_results():
     })
 
 
+@app.route('/api/backtest', methods=['POST'])
+def run_backtest():
+    """Run a backtest with SMA crossover strategy"""
+    params = request.get_json()
+    if not params:
+        return jsonify({'error': 'Missing request body'}), 400
+
+    symbol = (params.get('symbol') or '').upper()
+    if not symbol:
+        return jsonify({'error': 'Symbol is required'}), 400
+
+    period = params.get('period', '1y')
+    sma_fast = int(params.get('smaFast', 20))
+    sma_slow = int(params.get('smaSlow', 50))
+    initial_capital = float(params.get('initialCapital', 10000))
+
+    if sma_fast >= sma_slow:
+        return jsonify({'error': 'Fast SMA period must be less than slow SMA period'}), 400
+
+    # Map period to yfinance params (use daily interval for backtesting)
+    period_map = {
+        '3mo': {'period': '3mo', 'interval': '1d'},
+        '6mo': {'period': '6mo', 'interval': '1d'},
+        '1y': {'period': '1y', 'interval': '1d'},
+        '2y': {'period': '2y', 'interval': '1d'},
+        '5y': {'period': '5y', 'interval': '1d'},
+    }
+
+    if period not in period_map:
+        return jsonify({'error': f'Invalid period. Choose from: {", ".join(period_map.keys())}'}), 400
+
+    try:
+        config = period_map[period]
+        hist = yf.download(
+            symbol, period=config['period'], interval=config['interval'],
+            progress=False, auto_adjust=True
+        )
+        if isinstance(hist.columns, pd.MultiIndex):
+            hist.columns = hist.columns.get_level_values(0)
+        if hist.empty or len(hist) < sma_slow + 1:
+            return jsonify({'error': 'Not enough data for the selected period and SMA parameters'}), 400
+
+        close = hist['Close']
+        fast_ma = calculate_sma(close, sma_fast)
+        slow_ma = calculate_sma(close, sma_slow)
+
+        # Generate signals: 1 = long, 0 = flat
+        signal = pd.Series(0, index=close.index)
+        signal[fast_ma > slow_ma] = 1
+
+        # Only act on changes (crossovers)
+        positions = signal.diff().fillna(0)
+
+        # Simulate trades
+        trades = []
+        equity_curve = []
+        cash = initial_capital
+        shares = 0
+        entry_price = 0.0
+        entry_date = None
+
+        for i in range(len(close)):
+            date = close.index[i]
+            price = float(close.iloc[i])
+            ts = int(date.timestamp() * 1000)
+
+            if positions.iloc[i] == 1 and shares == 0:
+                # Buy signal
+                shares = int(cash / price)
+                if shares > 0:
+                    entry_price = price
+                    entry_date = date
+                    cash -= shares * price
+
+            elif positions.iloc[i] == -1 and shares > 0:
+                # Sell signal
+                cash += shares * price
+                pnl = (price - entry_price) * shares
+                pnl_pct = (price - entry_price) / entry_price * 100
+                trades.append({
+                    'entryDate': int(entry_date.timestamp() * 1000),
+                    'exitDate': ts,
+                    'entryPrice': round(entry_price, 2),
+                    'exitPrice': round(price, 2),
+                    'shares': shares,
+                    'pnl': round(pnl, 2),
+                    'pnlPct': round(pnl_pct, 2),
+                })
+                shares = 0
+
+            portfolio_value = cash + shares * price
+            equity_curve.append({'x': ts, 'y': round(portfolio_value, 2)})
+
+        # Close open position at end
+        if shares > 0:
+            final_price = float(close.iloc[-1])
+            cash += shares * final_price
+            pnl = (final_price - entry_price) * shares
+            pnl_pct = (final_price - entry_price) / entry_price * 100
+            trades.append({
+                'entryDate': int(entry_date.timestamp() * 1000),
+                'exitDate': int(close.index[-1].timestamp() * 1000),
+                'entryPrice': round(entry_price, 2),
+                'exitPrice': round(final_price, 2),
+                'shares': shares,
+                'pnl': round(pnl, 2),
+                'pnlPct': round(pnl_pct, 2),
+                'open': True,
+            })
+            shares = 0
+
+        final_value = cash
+        total_return = (final_value - initial_capital) / initial_capital * 100
+
+        # Buy & hold comparison
+        bh_shares = int(initial_capital / float(close.iloc[sma_slow]))
+        bh_start_price = float(close.iloc[sma_slow])
+        bh_final = (initial_capital - bh_shares * bh_start_price) + bh_shares * float(close.iloc[-1])
+        bh_return = (bh_final - initial_capital) / initial_capital * 100
+
+        buy_hold_curve = []
+        bh_cash_leftover = initial_capital - bh_shares * bh_start_price
+        for i in range(len(close)):
+            ts = int(close.index[i].timestamp() * 1000)
+            if i < sma_slow:
+                buy_hold_curve.append({'x': ts, 'y': round(initial_capital, 2)})
+            else:
+                bh_val = bh_cash_leftover + bh_shares * float(close.iloc[i])
+                buy_hold_curve.append({'x': ts, 'y': round(bh_val, 2)})
+
+        # Performance metrics
+        winning = [t for t in trades if t['pnl'] > 0]
+        losing = [t for t in trades if t['pnl'] <= 0]
+        win_rate = len(winning) / len(trades) * 100 if trades else 0
+
+        # Max drawdown from equity curve
+        peak = 0
+        max_dd = 0
+        for pt in equity_curve:
+            if pt['y'] > peak:
+                peak = pt['y']
+            dd = (peak - pt['y']) / peak * 100 if peak > 0 else 0
+            if dd > max_dd:
+                max_dd = dd
+
+        # Price data for overlay chart
+        price_data = _serialize_series(close)
+        fast_ma_data = _serialize_series(fast_ma)
+        slow_ma_data = _serialize_series(slow_ma)
+
+        return jsonify({
+            'symbol': symbol,
+            'period': period,
+            'smaFast': sma_fast,
+            'smaSlow': sma_slow,
+            'initialCapital': initial_capital,
+            'finalValue': round(final_value, 2),
+            'totalReturn': round(total_return, 2),
+            'buyHoldReturn': round(bh_return, 2),
+            'totalTrades': len(trades),
+            'winRate': round(win_rate, 1),
+            'maxDrawdown': round(max_dd, 2),
+            'avgWin': round(sum(t['pnl'] for t in winning) / len(winning), 2) if winning else 0,
+            'avgLoss': round(sum(t['pnl'] for t in losing) / len(losing), 2) if losing else 0,
+            'trades': trades,
+            'equityCurve': equity_curve,
+            'buyHoldCurve': buy_hold_curve,
+            'priceData': price_data,
+            'fastMA': fast_ma_data,
+            'slowMA': slow_ma_data,
+        })
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
 @app.route('/api/search/<query>')
 def search_stocks(query):
     """Search for stock symbols"""

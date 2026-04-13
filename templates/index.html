@@ -1115,6 +1115,238 @@
             display: block;
         }
 
+        /* Backtest Styles */
+        .backtest-content {
+            display: none;
+        }
+
+        .backtest-controls {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .backtest-controls-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.25rem;
+        }
+
+        .backtest-controls-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .backtest-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.25rem;
+        }
+
+        .backtest-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .backtest-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .backtest-input {
+            padding: 0.5rem 0.75rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            width: 100%;
+            transition: border-color 0.2s;
+        }
+
+        .backtest-input:focus {
+            outline: none;
+            border-color: var(--accent-cyan);
+        }
+
+        .backtest-select {
+            padding: 0.5rem 0.75rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        .backtest-select:focus {
+            outline: none;
+            border-color: var(--accent-cyan);
+        }
+
+        .backtest-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .backtest-run-btn {
+            padding: 0.65rem 1.5rem;
+            background: var(--gradient-2);
+            border: none;
+            border-radius: 10px;
+            color: var(--bg-primary);
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .backtest-run-btn:hover {
+            box-shadow: 0 4px 20px rgba(0, 212, 255, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .backtest-run-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .backtest-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .backtest-stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+        }
+
+        .backtest-stat-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.35rem;
+        }
+
+        .backtest-stat-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .backtest-stat-value.positive { color: var(--accent-green); }
+        .backtest-stat-value.negative { color: var(--accent-red); }
+        .backtest-stat-value.neutral { color: var(--accent-cyan); }
+
+        .backtest-charts {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .backtest-chart-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1rem;
+        }
+
+        .backtest-chart-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .backtest-trades-wrapper {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .backtest-trades-header {
+            padding: 1rem 1.5rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .backtest-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .backtest-table th {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .backtest-table td {
+            padding: 0.75rem 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            border-bottom: 1px solid rgba(45, 58, 79, 0.5);
+        }
+
+        .backtest-table .pnl-positive { color: var(--accent-green); }
+        .backtest-table .pnl-negative { color: var(--accent-red); }
+
+        .backtest-empty {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-muted);
+        }
+
+        .backtest-loading {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+        }
+
+        .backtest-loading.active {
+            display: block;
+        }
+
+        .open-trade-badge {
+            display: inline-block;
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            background: rgba(168, 85, 247, 0.15);
+            color: var(--accent-purple);
+            margin-left: 0.5rem;
+        }
+
         /* Responsive */
         @media (max-width: 1200px) {
             .left-sidebar { width: 220px; }
@@ -1161,6 +1393,7 @@
             .period-selector { flex-wrap: wrap; }
             .period-btn { flex: 0 0 calc(25% - 0.5rem); }
             .filter-row { flex-direction: column; }
+            .backtest-row { flex-direction: column; }
         }
     </style>
 </head>
@@ -1220,6 +1453,7 @@
         <div class="tab-selector" id="tab-selector">
             <button class="tab-btn active" data-tab="chart" onclick="switchTab('chart')">Chart</button>
             <button class="tab-btn" data-tab="screener" onclick="switchTab('screener')">Screener</button>
+            <button class="tab-btn" data-tab="backtest" onclick="switchTab('backtest')">Backtest</button>
         </div>
 
         <div class="error-message" id="error-message"></div>
@@ -1432,6 +1666,77 @@
             </div>
         </div>
 
+        <!-- Backtest Tab Content -->
+        <div id="backtest-tab-content" class="backtest-content">
+            <div class="backtest-controls">
+                <div class="backtest-controls-header">
+                    <span class="backtest-controls-title">SMA Crossover Backtest</span>
+                </div>
+
+                <div class="backtest-row">
+                    <div class="backtest-group">
+                        <label class="backtest-label">Symbol</label>
+                        <input type="text" class="backtest-input" id="bt-symbol" value="AAPL" placeholder="e.g. AAPL">
+                    </div>
+                    <div class="backtest-group">
+                        <label class="backtest-label">Period</label>
+                        <select class="backtest-select" id="bt-period">
+                            <option value="3mo">3 Months</option>
+                            <option value="6mo">6 Months</option>
+                            <option value="1y" selected>1 Year</option>
+                            <option value="2y">2 Years</option>
+                            <option value="5y">5 Years</option>
+                        </select>
+                    </div>
+                    <div class="backtest-group">
+                        <label class="backtest-label">Fast SMA</label>
+                        <input type="number" class="backtest-input" id="bt-sma-fast" value="20" min="2" max="100">
+                    </div>
+                    <div class="backtest-group">
+                        <label class="backtest-label">Slow SMA</label>
+                        <input type="number" class="backtest-input" id="bt-sma-slow" value="50" min="5" max="300">
+                    </div>
+                    <div class="backtest-group">
+                        <label class="backtest-label">Initial Capital ($)</label>
+                        <input type="number" class="backtest-input" id="bt-capital" value="10000" min="100" step="1000">
+                    </div>
+                </div>
+
+                <div class="backtest-actions">
+                    <button class="backtest-run-btn" id="bt-run-btn" onclick="runBacktest()">Run Backtest</button>
+                </div>
+            </div>
+
+            <div class="backtest-loading" id="bt-loading">
+                <div class="spinner" style="margin: 0 auto 1rem;"></div>
+                <span>Running backtest...</span>
+            </div>
+
+            <div id="bt-results" style="display:none;">
+                <div class="backtest-stats" id="bt-stats"></div>
+
+                <div class="backtest-charts">
+                    <div class="backtest-chart-card">
+                        <div class="backtest-chart-title">Equity Curve vs Buy & Hold</div>
+                        <div id="bt-equity-chart"></div>
+                    </div>
+                    <div class="backtest-chart-card">
+                        <div class="backtest-chart-title">Price with SMA Crossovers & Trade Markers</div>
+                        <div id="bt-price-chart"></div>
+                    </div>
+                </div>
+
+                <div class="backtest-trades-wrapper">
+                    <div class="backtest-trades-header">Trade Log</div>
+                    <div id="bt-trades-table"></div>
+                </div>
+            </div>
+
+            <div id="bt-empty" class="backtest-empty">
+                Configure parameters above and click "Run Backtest" to simulate an SMA crossover strategy.
+            </div>
+        </div>
+
         </div>
     </div>
 
@@ -1564,6 +1869,7 @@
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
             document.getElementById('chart-tab-content').style.display = tab === 'chart' ? 'block' : 'none';
             document.getElementById('screener-tab-content').style.display = tab === 'screener' ? 'block' : 'none';
+            document.getElementById('backtest-tab-content').style.display = tab === 'backtest' ? 'block' : 'none';
         }
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -2091,6 +2397,173 @@
             });
 
             renderScreenerTable(screenerData);
+        }
+
+        // === BACKTEST ===
+        let btEquityChart = null;
+        let btPriceChart = null;
+
+        async function runBacktest() {
+            const btn = document.getElementById('bt-run-btn');
+            const loadingEl = document.getElementById('bt-loading');
+            const resultsEl = document.getElementById('bt-results');
+            const emptyEl = document.getElementById('bt-empty');
+
+            const symbol = document.getElementById('bt-symbol').value.trim().toUpperCase();
+            if (!symbol) { alert('Enter a stock symbol'); return; }
+
+            btn.disabled = true;
+            btn.textContent = 'Running...';
+            loadingEl.classList.add('active');
+            resultsEl.style.display = 'none';
+            emptyEl.style.display = 'none';
+
+            try {
+                const body = {
+                    symbol: symbol,
+                    period: document.getElementById('bt-period').value,
+                    smaFast: parseInt(document.getElementById('bt-sma-fast').value),
+                    smaSlow: parseInt(document.getElementById('bt-sma-slow').value),
+                    initialCapital: parseFloat(document.getElementById('bt-capital').value),
+                };
+
+                const response = await fetch('/api/backtest', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body),
+                });
+                const data = await response.json();
+                if (!response.ok) throw new Error(data.error || 'Backtest failed');
+
+                renderBacktestResults(data);
+                resultsEl.style.display = 'block';
+            } catch (error) {
+                emptyEl.style.display = 'block';
+                emptyEl.innerHTML = `<span style="color: var(--accent-red);">Error: ${error.message}</span>`;
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Run Backtest';
+                loadingEl.classList.remove('active');
+            }
+        }
+
+        function renderBacktestResults(data) {
+            // Stats cards
+            const retClass = data.totalReturn >= 0 ? 'positive' : 'negative';
+            const bhClass = data.buyHoldReturn >= 0 ? 'positive' : 'negative';
+            const sign = v => v >= 0 ? '+' : '';
+
+            document.getElementById('bt-stats').innerHTML = `
+                <div class="backtest-stat-card">
+                    <div class="backtest-stat-label">Final Value</div>
+                    <div class="backtest-stat-value ${retClass}">$${data.finalValue.toLocaleString()}</div>
+                </div>
+                <div class="backtest-stat-card">
+                    <div class="backtest-stat-label">Strategy Return</div>
+                    <div class="backtest-stat-value ${retClass}">${sign(data.totalReturn)}${data.totalReturn.toFixed(2)}%</div>
+                </div>
+                <div class="backtest-stat-card">
+                    <div class="backtest-stat-label">Buy & Hold Return</div>
+                    <div class="backtest-stat-value ${bhClass}">${sign(data.buyHoldReturn)}${data.buyHoldReturn.toFixed(2)}%</div>
+                </div>
+                <div class="backtest-stat-card">
+                    <div class="backtest-stat-label">Total Trades</div>
+                    <div class="backtest-stat-value neutral">${data.totalTrades}</div>
+                </div>
+                <div class="backtest-stat-card">
+                    <div class="backtest-stat-label">Win Rate</div>
+                    <div class="backtest-stat-value ${data.winRate >= 50 ? 'positive' : 'negative'}">${data.winRate.toFixed(1)}%</div>
+                </div>
+                <div class="backtest-stat-card">
+                    <div class="backtest-stat-label">Max Drawdown</div>
+                    <div class="backtest-stat-value negative">-${data.maxDrawdown.toFixed(2)}%</div>
+                </div>
+                <div class="backtest-stat-card">
+                    <div class="backtest-stat-label">Avg Win</div>
+                    <div class="backtest-stat-value positive">$${data.avgWin.toFixed(2)}</div>
+                </div>
+                <div class="backtest-stat-card">
+                    <div class="backtest-stat-label">Avg Loss</div>
+                    <div class="backtest-stat-value negative">$${data.avgLoss.toFixed(2)}</div>
+                </div>
+            `;
+
+            // Equity curve chart
+            const equityOpts = {
+                series: [
+                    { name: 'Strategy', data: data.equityCurve },
+                    { name: 'Buy & Hold', data: data.buyHoldCurve }
+                ],
+                chart: { type: 'line', height: 300, background: 'transparent', toolbar: { show: true, tools: { download: false, selection: true, zoom: true, zoomin: true, zoomout: true, pan: true, reset: true } }, zoom: { enabled: true } },
+                colors: ['#00ff88', '#ff9f43'],
+                stroke: { curve: 'smooth', width: [2.5, 2], dashArray: [0, 5] },
+                dataLabels: { enabled: false },
+                xaxis: { type: 'datetime', labels: { style: { colors: '#64748b', fontFamily: 'JetBrains Mono' } }, axisBorder: { show: false }, axisTicks: { show: false } },
+                yaxis: { labels: { style: { colors: '#64748b', fontFamily: 'JetBrains Mono' }, formatter: v => '$' + (v ? v.toFixed(0) : '0') } },
+                grid: { borderColor: '#2d3a4f', strokeDashArray: 3 },
+                tooltip: { theme: 'dark', style: { fontFamily: 'JetBrains Mono' }, y: { formatter: v => '$' + (v ? v.toFixed(2) : '0') } },
+                legend: { position: 'top', horizontalAlign: 'left', labels: { colors: '#94a3b8' } },
+                annotations: {
+                    yaxis: [{ y: data.initialCapital, borderColor: '#64748b', borderWidth: 1, strokeDashArray: 5, label: { text: 'Initial: $' + data.initialCapital.toLocaleString(), style: { color: '#64748b', background: 'transparent', fontSize: '10px' } } }]
+                }
+            };
+            if (btEquityChart) btEquityChart.destroy();
+            btEquityChart = new ApexCharts(document.getElementById('bt-equity-chart'), equityOpts);
+            btEquityChart.render();
+
+            // Price chart with SMA lines and trade markers
+            const buyPoints = data.trades.map(t => ({ x: t.entryDate, y: t.entryPrice, marker: { size: 6, fillColor: '#00ff88', strokeColor: '#fff', strokeWidth: 2 }, label: { text: 'BUY', style: { color: '#fff', background: '#00ff88', fontSize: '9px', padding: { left: 4, right: 4, top: 2, bottom: 2 } } } }));
+            const sellPoints = data.trades.map(t => ({ x: t.exitDate, y: t.exitPrice, marker: { size: 6, fillColor: '#ff4757', strokeColor: '#fff', strokeWidth: 2 }, label: { text: t.open ? 'OPEN' : 'SELL', style: { color: '#fff', background: t.open ? '#a855f7' : '#ff4757', fontSize: '9px', padding: { left: 4, right: 4, top: 2, bottom: 2 } } } }));
+
+            const priceOpts = {
+                series: [
+                    { name: data.symbol, type: 'line', data: data.priceData },
+                    { name: `SMA ${data.smaFast}`, type: 'line', data: data.fastMA.filter(d => d.y !== null) },
+                    { name: `SMA ${data.smaSlow}`, type: 'line', data: data.slowMA.filter(d => d.y !== null) }
+                ],
+                chart: { type: 'line', height: 300, background: 'transparent', toolbar: { show: true, tools: { download: false, selection: true, zoom: true, zoomin: true, zoomout: true, pan: true, reset: true } }, zoom: { enabled: true } },
+                colors: ['#94a3b8', '#ffcc00', '#ff6b6b'],
+                stroke: { curve: 'smooth', width: [2, 1.5, 1.5] },
+                dataLabels: { enabled: false },
+                xaxis: { type: 'datetime', labels: { style: { colors: '#64748b', fontFamily: 'JetBrains Mono' } }, axisBorder: { show: false }, axisTicks: { show: false } },
+                yaxis: { labels: { style: { colors: '#64748b', fontFamily: 'JetBrains Mono' }, formatter: v => v != null ? '$' + v.toFixed(2) : '' } },
+                grid: { borderColor: '#2d3a4f', strokeDashArray: 3 },
+                tooltip: { theme: 'dark', style: { fontFamily: 'JetBrains Mono' }, y: { formatter: v => v != null ? '$' + v.toFixed(2) : '' } },
+                legend: { position: 'top', horizontalAlign: 'left', labels: { colors: '#94a3b8' } },
+                annotations: { points: [...buyPoints, ...sellPoints] }
+            };
+            if (btPriceChart) btPriceChart.destroy();
+            btPriceChart = new ApexCharts(document.getElementById('bt-price-chart'), priceOpts);
+            btPriceChart.render();
+
+            // Trades table
+            if (data.trades.length === 0) {
+                document.getElementById('bt-trades-table').innerHTML = '<div class="backtest-empty">No trades were generated. Try different SMA parameters.</div>';
+                return;
+            }
+
+            let html = '<table class="backtest-table"><thead><tr>';
+            html += '<th>#</th><th>Entry Date</th><th>Exit Date</th><th>Entry Price</th><th>Exit Price</th><th>Shares</th><th>P&L</th><th>P&L %</th>';
+            html += '</tr></thead><tbody>';
+
+            data.trades.forEach((t, i) => {
+                const pnlClass = t.pnl >= 0 ? 'pnl-positive' : 'pnl-negative';
+                const pnlSign = t.pnl >= 0 ? '+' : '';
+                const openBadge = t.open ? '<span class="open-trade-badge">OPEN</span>' : '';
+                html += `<tr>`;
+                html += `<td>${i + 1}</td>`;
+                html += `<td>${new Date(t.entryDate).toLocaleDateString()}</td>`;
+                html += `<td>${new Date(t.exitDate).toLocaleDateString()}${openBadge}</td>`;
+                html += `<td>$${t.entryPrice.toFixed(2)}</td>`;
+                html += `<td>$${t.exitPrice.toFixed(2)}</td>`;
+                html += `<td>${t.shares}</td>`;
+                html += `<td class="${pnlClass}">${pnlSign}$${t.pnl.toFixed(2)}</td>`;
+                html += `<td class="${pnlClass}">${pnlSign}${t.pnlPct.toFixed(2)}%</td>`;
+                html += `</tr>`;
+            });
+
+            html += '</tbody></table>';
+            document.getElementById('bt-trades-table').innerHTML = html;
         }
     </script>
 </body>
